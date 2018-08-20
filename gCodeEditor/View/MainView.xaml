@@ -1,0 +1,146 @@
+﻿<Window x:Class="gCodeEditor.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:local="clr-namespace:gCodeEditor.View"
+        xmlns:local2="clr-namespace:gCodeEditor.ViewModel"
+        mc:Ignorable="d"       
+        d:DataContext="{d:DesignInstance local2:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="gCode Editor" Height="500" Width="600">
+    <Window.Resources>
+        <Style TargetType="ListBoxItem" x:Key="ContainerStyle">
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Opacity" Value="0.5" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Opacity" Value="1.0" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top" IsMainMenu="True">
+            <MenuItem Header="_File">
+
+                <MenuItem Header="_Open..." InputGestureText="Ctrl+O" Command="{Binding Path=OpenBtn}" />
+                <Separator />
+                <MenuItem Header="_Save"  Command="{Binding Path=SaveBtn}" />
+                <MenuItem Header="_Save As..." />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit" />
+            <MenuItem Header="_View" />
+            <MenuItem Header="_Window" />
+            <MenuItem Header="_Help" />
+        </Menu>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel VerticalAlignment="Center" Margin="10" >
+                <Slider Name="CodeSlider" Minimum="1" Maximum="{Binding CodeCount}" Value="{Binding CodePosition}" TickPlacement="BottomRight" TickFrequency="1" />
+            </StackPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0,10,0" >
+                        <TextBlock Text="Lines:" Margin="0,0,10,0" />
+                        <TextBlock Text="{Binding CodePosition}" />
+                        <TextBlock Text=" / " />
+                        <TextBlock Text="{Binding CodeCount}" />
+                    </StackPanel>
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock Text="{Binding CurrentCodeString}" />
+                </StatusBarItem>
+                <Separator Grid.Column="3" />
+                <StatusBarItem Grid.Column="4">
+                    <TextBlock Text="{Binding RemoveFromStr}" />
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="5">
+                    <TextBlock Text="{Binding RemoveToStr}" />
+                </StatusBarItem>
+                <Separator Grid.Column="6" />
+                <StatusBarItem Grid.Column="7">
+                    <TextBlock Text="{Binding ObjWidth}" />
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="8">
+                    <TextBlock Text="{Binding ObjHeight}" />
+                </StatusBarItem>
+            </StatusBar>
+        </StackPanel>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <GroupBox Margin="10" Header="Codes" Grid.Column="0">
+                <ListBox  Name="CodeList" ItemsSource="{Binding RowList}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                         ItemContainerStyle="{StaticResource ContainerStyle}" BorderThickness="0"
+                         DisplayMemberPath="Name"/>
+            </GroupBox>
+            <GroupBox Margin="10" Padding="5" Header="Navigator" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="8" Command="{Binding UpZ}">+Z</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="7" Command="{Binding Up100}">+100</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="6" Command="{Binding Up10}">+10</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="5" Command="{Binding Up1}">+1</Button>
+
+                    <Button MaxWidth="50" Margin="3" Grid.Row="3" Command="{Binding Down1}">-1</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="2" Command="{Binding Down10}">-10</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="1" Command="{Binding Down100}">-100</Button>
+                    <Button MaxWidth="50" Margin="3" Grid.Row="0" Command="{Binding DownZ}">-Z</Button>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Margin="10" Header="Editor" Grid.Column="2">
+                <StackPanel>
+                    <Button Margin="10" Padding="2" Command="{Binding InsertCommands}" >Insert Commands</Button>
+                    <GroupBox Margin="10" Header="Remove" >
+                        <StackPanel Margin="5" >
+                            <Button Margin="5" Padding="2" Command="{Binding RemoveFrom}">From</Button>
+                            <Button Margin="5" Padding="2" Command="{Binding RemoveTo}">To</Button>
+                            <Button Margin="5" Padding="2" Command="{Binding Remove}">Execute</Button>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+
+</Window>

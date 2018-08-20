@@ -1,0 +1,16 @@
+﻿<Window x:Class="gCodeEditor.View.InsertCommandsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gCodeEditor.View"
+        mc:Ignorable="d"
+        Title="Insert Commands Dialog" Height="300" Width="300">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button IsDefault="True"  Click="OkBtn_Click" Width="60" Margin="10">_OK</Button>
+            <Button IsCancel="True" Width="60" Margin="10">_Cancel</Button>
+        </StackPanel>
+        <TextBox Name="txtAnswer" Margin="10" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"/>
+    </DockPanel>
+</Window>

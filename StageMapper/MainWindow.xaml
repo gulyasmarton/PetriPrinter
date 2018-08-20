@@ -1,0 +1,23 @@
+﻿<Window x:Class="StageMapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StageMapper"
+        mc:Ignorable="d"
+        Title="Stage Mapper" Height="450" Width="350">         
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Button Name="StartBtn" Click="OkBtnClick" Margin="5" MaxWidth="120" Grid.Row="0">Start Calibration</Button>
+            <Button Name="StopBtn" Click="StopBtnClick" Margin="5" MaxWidth="120" Grid.Row="2">Close</Button>
+            <Grid Name="Stage" Grid.Row="1">
+            </Grid>
+        </Grid>   
+</Window>

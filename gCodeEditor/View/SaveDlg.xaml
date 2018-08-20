@@ -1,0 +1,44 @@
+﻿<Window x:Class="gCodeEditor.View.SaveDlg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gCodeEditor.View"
+        mc:Ignorable="d"
+        Title="Save" Height="150" Width="300">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="Col1Stl">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin"  Value="5"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="Col2Stl">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin"  Value="5"/>
+        </Style>
+        <Style BasedOn="{StaticResource Col2Stl}" TargetType="TextBox" x:Key="Col2Area">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button IsDefault="True"  Click="OkBtn_Click" Width="60" Margin="10">_OK</Button>
+            <Button IsCancel="True" Width="60" Margin="10">_Cancel</Button>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource Col1Stl}"  Grid.Row="0">Name</TextBlock>
+            <TextBlock Style="{StaticResource Col1Stl}" Grid.Row="1">Description</TextBlock>
+            <TextBox Name="cName" Style="{StaticResource Col2Stl}" Grid.Column="1" Grid.Row="0" />
+            <TextBox Name="cDescription" Style="{StaticResource Col2Stl}" Grid.Column="1" Grid.Row="1" />
+        </Grid>
+    </DockPanel>
+</Window>

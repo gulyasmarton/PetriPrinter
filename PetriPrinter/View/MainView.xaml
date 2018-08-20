@@ -1,0 +1,197 @@
+﻿<Window x:Class="PetriPrinter.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PetriPrinter.View"
+        xmlns:local2="clr-namespace:PetriPrinter.ViewModel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local2:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="{Binding WinTitle}" Height="600" Width="525">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StatusBar Grid.Row="3">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Column="0">
+                    <ProgressBar Value="{Binding StateValue}" Maximum="100" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2" >
+                <TextBlock Margin="10,0,0,0" Text="{Binding StateString}" />
+            </StatusBarItem>
+
+
+        </StatusBar>
+
+        <Menu Grid.Row="0" IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" InputGestureText="Ctrl+N" Command="{Binding Path=CreateNewBtn}" />
+                <MenuItem Header="_Open" InputGestureText="Ctrl+O" Command="{Binding Path=OpenBtn}" />
+                <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding Path=SaveBtn}" />
+                <MenuItem Header="_Save As" Command="{Binding Path=SaveAsBtn}" />
+                <Separator />
+                <MenuItem Header="_Import..." Command="{Binding Path=ImportBtn}" />
+                <Separator />
+                <MenuItem Header="_Load grid height map" Command="{Binding Path=LoadGridMapBtn}" />
+                <Separator />
+                <MenuItem Header="_Close"  Click="CloseBtn_Click" />
+            </MenuItem>
+            <MenuItem Header="_Settings" >
+                <MenuItem Header="_Grid" Command="{Binding Path=ShowGridSettingsBtn}" />
+                <MenuItem Header="_Printer" Command="{Binding Path=ShowPrinterSettingsBtn}" />
+            </MenuItem>
+            <MenuItem Header="_Help" >
+                <MenuItem Header="_View Help" Command="{Binding Path=showHelpBtn}" />
+                <MenuItem Header="_About" Command="{Binding Path=showAboutBtn}" />
+            </MenuItem>
+        </Menu>
+
+        <ToolBarTray  Grid.Row="1" >
+            <ToolBar Band="1" BandIndex="1">
+                <ComboBox DisplayMemberPath="Name"  Width="200" ItemsSource="{Binding AvailableTaskList}" SelectedItem="{Binding SelectedTask}" />
+                <Separator />
+                <Button Command="{Binding AddBtn}">
+                    <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                        <Canvas Name="svg2" Width="24" Height="24">
+                            <Canvas Name="g4">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="-1028.4"/>
+                                </Canvas.RenderTransform>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path6" Fill="#FF27AE60">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                    <Path.RenderTransform>
+                                        <TranslateTransform X="0" Y="1029.4"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path8" Fill="#FF2ECC71">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                    <Path.RenderTransform>
+                                        <TranslateTransform X="0" Y="1028.4"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path10" Fill="#FF27AE60">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m6.0001 1042.4h4.9999v5h2v-5h5v-2h-5v-5h-2v5h-4.9999v2z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path12" Fill="#FFECF0F1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m6 1041.4h5v5h2v-5h5v-2h-5v-5h-2v5h-5v2z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold">Add</TextBlock>
+                                <TextBlock>Adds tasks to the selected positions.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Command="{Binding RemoveBtn}">
+                    <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                        <Canvas  Width="24" Height="24">
+                            <Canvas>
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="-1028.4"/>
+                                </Canvas.RenderTransform>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFC0392B">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                    <Path.RenderTransform>
+                                        <TranslateTransform X="0" Y="1029.4"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFE74C3C">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                    <Path.RenderTransform>
+                                        <TranslateTransform X="0" Y="1028.4"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FFC0392B">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m7.0503 1037.8 3.5357 3.6-3.5357 3.5 1.4142 1.4 3.5355-3.5 3.536 3.5 1.414-1.4-3.536-3.5 3.536-3.6-1.414-1.4-3.536 3.5-3.5355-3.5-1.4142 1.4z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  Fill="#FFECF0F1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m7.0503 1036.8 3.5357 3.6-3.5357 3.5 1.4142 1.4 3.5355-3.5 3.536 3.5 1.414-1.4-3.536-3.5 3.536-3.6-1.414-1.4-3.536 3.5-3.5355-3.5-1.4142 1.4z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold">Clear</TextBlock>
+                                <TextBlock>Removes tasks from the selected positions.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Separator />
+                <Button Command="{Binding GenerateBtn}">
+                    <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                        <Canvas Name="svg5273" Width="25" Height="25">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0"/>
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Canvas Name="layer1">
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="#FF03A6FF">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 11.366599 0.0221725 c -0.07934 0.0113 -0.368356 0.051 -0.651706 0.085 -0.680041 0.085 -1.6717669 0.33419 -2.4368128 0.60607 -1.7964415 0.64006 -3.2188599 1.552 -4.6242776 2.95106 -1.9324493 1.93716 -3.06018364 4.12922 -3.54754623 6.8876895 -0.14167515 0.804321 -0.14167515 3.10399 0 3.908311 0.48736259 2.758469 1.61509693 4.95053 3.54754623 6.88769 1.9381164 1.9315 4.1312478 3.05868 6.8910804 3.5458 0.804715 0.14161 3.105519 0.14161 3.910234 0 2.759832 -0.48712 4.952964 -1.6143 6.89108 -3.5458 1.93245 -1.93716 3.060184 -4.12922 3.547547 -6.88769 0.141675 -0.804321 0.141675 -3.10399 0 -3.908311 -0.374023 -2.1184195 -1.133401 -3.9026495 -2.380143 -5.5792495 -0.515698 -0.69104 -1.785107 -1.95982 -2.476482 -2.47527 -1.6661 -1.24046 -3.485209 -2.01646 -5.553667 -2.36764 -0.51003 -0.0906 -2.771166 -0.16993 -3.116853 -0.10762 z m 5.258982 7.83928 c 0.192678 0.23789 0.323019 0.44747 0.294684 0.48146 -0.02267 0.0283 -1.269409 2.0844305 -2.776833 4.5596905 -1.501757 2.475259 -2.765499 4.531369 -2.799501 4.571019 -0.04534 0.051 -0.476029 -0.47579 -1.7511052 -2.13541 l -1.6831011 -2.203379 0.2833501 -0.45313 0.2890176 -0.44748 1.2977446 0.78733 c 0.714043 0.43048 1.314745 0.78733 1.343081 0.78166 0.02267 0 1.178737 -1.43871 2.567153 -3.20028 1.38275 -1.7559105 2.533152 -3.1889605 2.55582 -3.1832905 0.02267 0.0113 0.192679 0.20957 0.37969 0.44181 z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold">Generate g-code</TextBlock>
+                                <TextBlock>Shows a save file dialog.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <Grid Name="Stage" Grid.Row="2">
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,54 @@
+﻿<Window x:Class="gCodeEditor.View.TrackViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gCodeEditor.View"
+        mc:Ignorable="d"
+        Title="Path Viewer" Height="400" Width="600">
+    <DockPanel LastChildFill="True">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Name="RemoveBtn" >Remove</Button>
+                <Separator />
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="5,0,10,0" Grid.Column="0" >X:</TextBlock>
+                    <TextBlock Grid.Column="1"  Name="xLabel"/>
+                    <TextBlock Margin="5,0,10,0" Grid.Column="2" >Y:</TextBlock>
+                    <TextBlock Grid.Column="3"  Name="yLabel"/>
+                    <TextBlock Margin="5,0,10,0" Grid.Column="4" >Z:</TextBlock>
+                    <TextBlock Grid.Column="5"  Name="zLabel"/>
+                </Grid>
+                <StackPanel Width="100" Orientation="Horizontal" VerticalAlignment="Center">
+
+                </StackPanel>
+            </ToolBar>
+        </ToolBarTray>
+
+        <DockPanel Margin="5" DockPanel.Dock="Bottom" LastChildFill="True">
+            <TextBlock DockPanel.Dock="Left" Margin="0,0,5,0">Zoom:</TextBlock>
+            <Slider  x:Name="zoomSlider" Minimum="1" Maximum="20" Value="5"  />
+        </DockPanel>
+        
+        <ScrollViewer  Name="scrollViewer" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <Grid VerticalAlignment="Center"  HorizontalAlignment="Center" Name="grid" RenderTransformOrigin="0.5,0.5">
+                <Grid.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="scaleTransform"/>
+                    </TransformGroup>
+                </Grid.LayoutTransform>
+                <Canvas Width="200" Height="200" Background="LightGray"  Name="Vaszon">
+                    <!--<Ellipse Fill="Red" Width="100"  Height="100"/>-->
+                </Canvas>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
